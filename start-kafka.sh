@@ -8,7 +8,11 @@ if [[ -z "$KAFKA_ADVERTISED_PORT" ]]; then
 fi
 if [[ -z "$KAFKA_BROKER_ID" ]]; then
     # By default auto allocate broker ID
-    export KAFKA_BROKER_ID=-1
+    # get id from kubernetes-hostname
+    IFS='-' read -ra name_array <<< "$(hostname)"
+    size=${#name_array[@]}
+    id=${name_array[${size}-1]}
+    export KAFKA_BROKER_ID=$id
 fi
 if [[ -z "$KAFKA_LOG_DIRS" ]]; then
     export KAFKA_LOG_DIRS="/kafka/kafka-logs-$HOSTNAME"
