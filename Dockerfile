@@ -2,8 +2,9 @@ FROM nimmis/java-centos
 
 MAINTAINER lovepocky
 
-#RUN yum update -y && \
-#yum install -y jq
+ENV http_proxy=http://192.168.1.113:1087
+RUN yum update -y && \
+yum install -y net-tools
 
 ENV KAFKA_VERSION="0.10.1.0" SCALA_VERSION="2.11"
 ADD download-kafka.sh /tmp/download-kafka.sh
